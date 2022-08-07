@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const app = express();
 
-app.listen(3000, () => console.log("Server is running"));
+app.listen(3000, () => console.log("Capstone lets be live on port 3000"));
 
 mongoose.connect(
     process.env.MONGODB_URI, 
@@ -12,6 +12,8 @@ mongoose.connect(
         useNewUrlParser: true,
         useUnifiedTopology: true
     }
+).finally(
+console.log('Db Connected!!!')
 );
 
 // _id:62ae24d6410154794c1c8150
@@ -24,6 +26,7 @@ mongoose.connect(
 // uploadDate:2022-06-18T19:17:43.019+00:00
 
 const articleSchema = new mongoose.Schema({
+    _id: String,
     filename: String,
     author: String,
     title: String,
@@ -33,10 +36,10 @@ const articleSchema = new mongoose.Schema({
     uploadDate: Date
 });
 
-const Article = mongoose.model('Article', articleSchema);
+const Files = mongoose.model('files', articleSchema);
 
 app.get('/', (req, res) => {
-    Article.find({}, (err, found) => {
+    Files.find({}, (err, found) => {
         if (!err) {
             res.send(found);
         }
